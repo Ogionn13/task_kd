@@ -22,20 +22,18 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
-//import User_error_block from "@/components/elements/user_error_block.vue";
+
 
 export default {
     name: "ShowTask",
-//    components: {User_error_block},
+
     data() {
         return {
             task: null,
-            categories: [],
-            result: {'result': null, 'message': null}
+            categories: []
         };
     },
 
@@ -46,22 +44,9 @@ export default {
 
 
     methods: {
-        editTask(data, mess) {
+        editTask(data) {
                     axios.patch('/api/tasks/' + this.task.id, data)
-                        .then(response => {
-                            this.result = {'result': 'ok', 'message': mess}
-                        })
-                        .catch(error => {
-                            this.result = {'result': 'error', 'message': error.response.data.message}
-                        })
-                        .finally(() => {
-                            setTimeout(() => {
-                                this.result = {'result': null, 'message': null}
-                            }, 4000);
-                        });
-
         },
-
 
         editTitle() {
             if (this.$refs.newTitle.textContent !== this.task.title) {
@@ -71,14 +56,12 @@ export default {
         },
 
 
-
         editDescription() {
             if (this.$refs.newDescription.textContent !== this.task.description) {
                 this.task.description = this.$refs.newDescription.textContent
                 this.editTask({description: this.$refs.newDescription.textContent}, 'Изменено описание задачи ');
             }
         },
-
 
         updateCategory() {
             this.editTask({category_id: this.task.category_id}, 'изменена категория задачи');
@@ -90,9 +73,6 @@ export default {
                     console.log(response.data)
                     this.categories = response.data;
                 })
-                .catch(error => {
-                    console.error('Ошибка получения категорий', error);
-                });
         },
 
         getTaskById() {
@@ -100,14 +80,9 @@ export default {
                         .then(response => {
                             this.task = response.data;
                         })
-                        .catch(error => {
-                            console.error('Ошибка получения проекта', error);
-                        });
-
         },
     },
-}
-;
+};
 </script>
 
 <style scoped>

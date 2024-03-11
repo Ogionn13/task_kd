@@ -24,14 +24,11 @@ __webpack_require__.r(__webpack_exports__);
     this.getTasks();
     this.getCategories();
   },
-  computed: {},
   methods: {
     getTasks: function getTasks() {
       var _this = this;
       axios.get('api/tasks').then(function (response) {
         _this.tasks = response.data;
-      })["catch"](function (error) {
-        console.error('Ошибка получения задач', error);
       });
     },
     getCategories: function getCategories() {
@@ -39,22 +36,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('api/categories').then(function (response) {
         console.log(response.data);
         _this2.categories = response.data;
-      })["catch"](function (error) {
-        console.error('Ошибка получения категорий', error);
       });
     },
     selectTaskByCategory: function selectTaskByCategory() {
       var _this3 = this;
-      document.cookie = "XDEBUG_TRIGGER=1; path=/";
-
-      // Получаем все куки
-      var cookies = document.cookie;
       axios.get('api/tasks/select', {
         params: {
           category_id: this.selectedCategory
-        },
-        headers: {
-          'Cookie': cookies // Добавляем куки в заголовки запроса
         }
       }).then(function (response) {
         _this3.tasks = response.data;

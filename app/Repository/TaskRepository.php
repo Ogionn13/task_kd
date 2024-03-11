@@ -22,7 +22,6 @@ class TaskRepository
             ->orderBy('tasks.created_at', 'desc');
     }
 
-
     public function getTasks(): Collection
     {
         return $this->createQueryWithCategory()->get();

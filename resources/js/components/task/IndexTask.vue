@@ -31,7 +31,6 @@
                     </td>
                     <td class="text-md-center">{{ task.category }}</td>
                     <td class="text-md-center">{{ task.created_at }}</td>
-
                 </tr>
                 </tbody>
             </table>
@@ -44,7 +43,6 @@
 
 export default {
     name: "IndexTask",
-
 
     data() {
         return {
@@ -59,18 +57,12 @@ export default {
         this.getCategories();
     },
 
-    computed: {},
-
-
     methods: {
         getTasks() {
             axios.get('api/tasks')
                 .then(response => {
                     this.tasks = response.data;
                 })
-                .catch(error => {
-                    console.error('Ошибка получения задач', error);
-                });
         },
 
         getCategories() {
@@ -79,21 +71,11 @@ export default {
                     console.log(response.data)
                     this.categories = response.data;
                 })
-                .catch(error => {
-                    console.error('Ошибка получения категорий', error);
-                });
         },
         selectTaskByCategory() {
-            document.cookie = "XDEBUG_TRIGGER=1; path=/";
-
-            // Получаем все куки
-            var cookies = document.cookie;
             axios.get('api/tasks/select', {
                 params: {
                     category_id: this.selectedCategory
-                },
-                headers: {
-                    'Cookie': cookies // Добавляем куки в заголовки запроса
                 }
             })
                 .then(response => {

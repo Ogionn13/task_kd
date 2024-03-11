@@ -11,19 +11,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//import User_error_block from "@/components/elements/user_error_block.vue";
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ShowTask",
-  //    components: {User_error_block},
   data: function data() {
     return {
       task: null,
-      categories: [],
-      result: {
-        'result': null,
-        'message': null
-      }
+      categories: []
     };
   },
   mounted: function mounted() {
@@ -31,26 +24,8 @@ __webpack_require__.r(__webpack_exports__);
     this.getCategories();
   },
   methods: {
-    editTask: function editTask(data, mess) {
-      var _this = this;
-      axios.patch('/api/tasks/' + this.task.id, data).then(function (response) {
-        _this.result = {
-          'result': 'ok',
-          'message': mess
-        };
-      })["catch"](function (error) {
-        _this.result = {
-          'result': 'error',
-          'message': error.response.data.message
-        };
-      })["finally"](function () {
-        setTimeout(function () {
-          _this.result = {
-            'result': null,
-            'message': null
-          };
-        }, 4000);
-      });
+    editTask: function editTask(data) {
+      axios.patch('/api/tasks/' + this.task.id, data);
     },
     editTitle: function editTitle() {
       if (this.$refs.newTitle.textContent !== this.task.title) {
@@ -74,20 +49,16 @@ __webpack_require__.r(__webpack_exports__);
       }, 'изменена категория задачи');
     },
     getCategories: function getCategories() {
-      var _this2 = this;
+      var _this = this;
       axios.get('/api/categories').then(function (response) {
         console.log(response.data);
-        _this2.categories = response.data;
-      })["catch"](function (error) {
-        console.error('Ошибка получения категорий', error);
+        _this.categories = response.data;
       });
     },
     getTaskById: function getTaskById() {
-      var _this3 = this;
+      var _this2 = this;
       axios.get('/api/tasks/' + this.$route.params.id).then(function (response) {
-        _this3.task = response.data;
-      })["catch"](function (error) {
-        console.error('Ошибка получения проекта', error);
+        _this2.task = response.data;
       });
     }
   }

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DTO\TaskFilter;
-use App\Http\Requests\GetTaskRequest;
+use App\Http\Requests\SelectTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Repository\TaskRepository;
-use Illuminate\Support\Facades\DB;
+
 
 class TaskController extends Controller
 {
@@ -22,8 +22,8 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $data = $request->validated();
-        $task = Task::create($data);
-        return $task;
+       Task::create($data);
+
     }
 
     public function show(Task $task)
@@ -36,7 +36,7 @@ class TaskController extends Controller
         return $this->taskRepository->getTasks();
     }
 
-    public function select(GetTaskRequest $request)
+    public function select(SelectTaskRequest $request)
     {
         $filter = new TaskFilter();
         $filter->category_id =  $request->input('category_id');
@@ -48,6 +48,5 @@ class TaskController extends Controller
         $data = $request->validated();
         $task->fill($data);
         $task->save();
-        return $task;
     }
 }

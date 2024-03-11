@@ -11,11 +11,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//import User_error_block from "@/components/elements/user_error_block.vue";
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CreateTask",
-  //  components: {User_error_block},
   data: function data() {
     return {
       title: null,
@@ -39,50 +36,23 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     store: function store() {
       var _this = this;
-      console.log(this.category_id);
-      console.log(this.description);
-      console.log(this.title);
       axios.post('/api/tasks', {
         title: this.title,
         description: this.description,
         category_id: this.category_id
       }).then(function (response) {
-        _this.result = {
-          'result': 'ok',
-          'message': "Задача создана"
-        };
-        setTimeout(function () {
-          _this.result = {
-            'result': null,
-            'message': null
-          };
-          _this.$router.push({
-            name: 'tasks.index',
-            params: {
-              id: response.data.id
-            }
-          });
-        }, 1500);
-      })["catch"](function (error) {
-        _this.result = {
-          'result': 'error',
-          'message': error.response.data.message
-        };
-        setTimeout(function () {
-          _this.result = {
-            'result': null,
-            'message': null
-          };
-        }, 7000);
+        _this.$router.push({
+          name: 'tasks.index',
+          params: {
+            id: response.data.id
+          }
+        });
       });
     },
     getCategories: function getCategories() {
       var _this2 = this;
       axios.get('/api/categories').then(function (response) {
-        console.log(response.data);
         _this2.categories = response.data;
-      })["catch"](function (error) {
-        console.error('Ошибка получения категорий', error);
       });
     }
   }
@@ -104,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "container w-75"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("           //<user_error_block></user_error_block>")], -1 /* HOISTED */);
+}, null, -1 /* HOISTED */);
 var _hoisted_2 = {
   "class": "container mt-5 w-25"
 };

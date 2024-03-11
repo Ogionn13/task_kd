@@ -39,11 +39,4 @@ export default {
 
 
 <style>
-
-.nav-link {
-    margin: 0 10px;
-    color: #333;
-    font-weight: bold;
-}
-
 </style>
