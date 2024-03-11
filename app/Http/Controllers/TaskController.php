@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\DTO\TaskFilter;
+use App\Http\Requests\GetTaskRequest;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Task;
+use App\Repository\TaskRepository;
+use Illuminate\Support\Facades\DB;
+
+class TaskController extends Controller
+{
+    protected TaskRepository $taskRepository;
+
+    public function __construct( TaskRepository $taskRepository)
+    {
+        $this->taskRepository = $taskRepository;
+    }
+
+    public function store(StoreTaskRequest $request)
+    {
+        $data = $request->validated();
+        $task = Task::create($data);
+        return $task;
+    }
+
+    public function show(Task $task)
+    {
+        return $task->load(['category']);
+    }
+
+    public function index()
+    {
+        return $this->taskRepository->getTasks();
+    }
+
+    public function select(GetTaskRequest $request)
+    {
+        $filter = new TaskFilter();
+        $filter->category_id =  $request->input('category_id');
+        return $this->taskRepository->getTasksWithFilter($filter);
+    }
+
+    public function update(UpdateTaskRequest $request, Task $task)
+    {
+        $data = $request->validated();
+        $task->fill($data);
+        $task->save();
+        return $task;
+    }
+}
